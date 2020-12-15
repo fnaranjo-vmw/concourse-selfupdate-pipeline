@@ -1,0 +1,14 @@
+{
+	"name": "Concourse",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "fly",
+	"workspaceFolder": "/workspace",
+
+	"remoteEnv": {
+		"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	},
+
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash"
+	}
+}
