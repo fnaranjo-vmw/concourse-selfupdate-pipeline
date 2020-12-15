@@ -1,0 +1,28 @@
+---
+resources:
+- name: repo
+  type: git
+  source: {uri: http://github.com/fejnartal/concourse-selfupdate-pipeline.git}
+
+jobs:
+  - name: configure-self
+    plan:
+    - get: repo
+      trigger: true
+    - set_pipeline: self
+      file: repo/pipeline.yml
+
+  - name: hello
+    plan:
+      - get: repo
+        trigger: true
+        passed: [configure-self]
+      - task: echo-hello-world
+        config:
+          platform: linux
+          image_resource:
+            type: registry-image
+            source: { repository: busybox }
+          run:
+            path: echo
+            args: ["Hello world!"]
