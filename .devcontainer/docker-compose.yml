@@ -21,7 +21,7 @@ services:
     image: concourse/concourse:latest
     command: quickstart
     privileged: true
-    depends_on: [concourse-db]
+    depends_on: [concourse-db, vault]
     ports: ["8080:8080"]
     environment:
     - CONCOURSE_POSTGRES_HOST=concourse-db
@@ -32,3 +32,17 @@ services:
     - CONCOURSE_ADD_LOCAL_USER=test:test
     - CONCOURSE_MAIN_TEAM_LOCAL_USER=test
     - CONCOURSE_WORKER_GARDEN_NETWORK
+    - CONCOURSE_VAULT_URL=http://vault:8200
+    - CONCOURSE_VAULT_CLIENT_TOKEN=YOUR_CUSTOM_TOKEN
+
+  vault:
+    image: custom_vault:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.Vault
+    ports:
+      - 8200:8200
+    environment:
+    - VAULT_DEV_ROOT_TOKEN_ID=YOUR_CUSTOM_TOKEN
+    - SKIP_SETCAP=false
+    - VAULT_ADDR=http://0.0.0.0:8200

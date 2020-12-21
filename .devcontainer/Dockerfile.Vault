@@ -1,0 +1,8 @@
+FROM vault:latest
+
+CMD sh -c "docker-entrypoint.sh server -dev &" \
+ && sleep 4 \
+ && vault login "$VAULT_DEV_ROOT_TOKEN_ID" \
+ && vault secrets enable -path=concourse -version=1 kv \
+ && vault kv put concourse/main/hello/hello value="Hello from Vault!" \
+ && sh -c 'while sleep 3600; do :; done'
