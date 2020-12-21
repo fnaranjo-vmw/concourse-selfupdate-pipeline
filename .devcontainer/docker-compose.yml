@@ -2,12 +2,13 @@ version: '3'
 
 services:
   fly:
-    image: arbourd/concourse-fly
-    command: sleep infinity
-    depends_on: [localhost]
+    image: custom-fly:latest
+    depends_on: [concourse]
     volumes:
     - ..:/workspace
-    - ../setup-pipeline.sh:/root/.bashrc
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile.Fly
 
   concourse-db:
     image: postgres
@@ -17,7 +18,7 @@ services:
     - POSTGRES_USER=concourse_user
     - PGDATA=/database
 
-  localhost:
+  concourse:
     image: concourse/concourse:latest
     command: quickstart
     privileged: true

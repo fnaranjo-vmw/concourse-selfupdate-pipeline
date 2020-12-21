@@ -1,0 +1,7 @@
+FROM arbourd/concourse-fly:latest
+
+COPY .devcontainer/setup-pipeline.sh setup-hello-pipeline.sh
+COPY ./pipeline.yml pipeline.yml
+RUN chmod +x setup-hello-pipeline.sh
+
+CMD ["./setup-hello-pipeline.sh", "sleep", "infinity"]
