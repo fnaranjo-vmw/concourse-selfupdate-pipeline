@@ -2,7 +2,9 @@
 resources:
 - name: repo
   type: git
-  source: {uri: http://github.com/fejnartal/concourse-selfupdate-pipeline.git}
+  source:
+    uri: http://github.com/fejnartal/concourse-selfupdate-pipeline.git
+    branch: ((PR_BRANCH))
 
 jobs:
   - name: configure-self
@@ -26,13 +28,3 @@ jobs:
           run:
             path: echo
             args: ["Hello world!"]
-
-      - task: echo-hello-vault
-        config:
-          platform: linux
-          image_resource:
-            type: registry-image
-            source: { repository: busybox }
-          run:
-            path: echo
-            args: [((hello))]
