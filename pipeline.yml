@@ -13,6 +13,9 @@ jobs:
       trigger: true
     - set_pipeline: self
       file: repo/pipeline.yml
+      vars:
+        PR_BRANCH: ((PR_BRANCH))
+        PR_REPO: ((PR_REPO))
 
   - name: hello
     plan:
