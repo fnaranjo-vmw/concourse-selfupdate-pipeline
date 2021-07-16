@@ -17,12 +17,12 @@ jobs:
         PR_BRANCH: ((PR_BRANCH))
         PR_REPO: ((PR_REPO))
 
-  - name: hello
+  - name: bye
     plan:
       - get: repo
         trigger: true
         passed: [configure-self]
-      - task: echo-hello-world
+      - task: echo-bye-world
         config:
           platform: linux
           image_resource:
